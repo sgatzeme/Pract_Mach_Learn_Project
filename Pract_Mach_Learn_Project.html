@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Practical Machine Learning Project: Predicting Excercise Manners</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Practical Machine Learning Project: Predicting Excercise Manners</h1>
+
+<h3>0. Synopsis</h3>
+
+<p>Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. The goal of this project is to predict the manner in which subjects exercise.</p>
+
+<p>The training data for this project are available here:</p>
+
+<p><a href="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv">https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv</a></p>
+
+<p>The test data are available here: </p>
+
+<p><a href="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv">https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv</a></p>
+
+<p>The outcome variable is classe, a factor variable with 5 levels. For this data set, &ldquo;participants were asked to perform one set of 10 repetitions of the Unilateral Dumbbell Biceps Curl in 5 different fashions:</p>
+
+<ul>
+<li>exactly according to the specification (Class A)</li>
+<li>throwing the elbows to the front (Class B)</li>
+<li>lifting the dumbbell only halfway (Class C)</li>
+<li>lowering the dumbbell only halfway (Class D)</li>
+<li>throwing the hips to the front (Class E)&rdquo;</li>
+</ul>
+
+<h3>1. Setting the basic parameters</h3>
+
+<p>Loading frequently used functions consolidated in the misc.R script file (such as <em>downloadFile()</em> and <em>getNAStrings()</em>)</p>
+
+<pre><code class="r">source(&quot;../common/misc.R&quot;)
+</code></pre>
+
+<p>Logging session information for debugging</p>
+
+<pre><code class="r">origLocale &lt;- Sys.getlocale(&quot;LC_TIME&quot;)
+session &lt;- sessInfo(clear=TRUE, loc=c(&quot;LC_TIME&quot;, &quot;English&quot;), log=TRUE)
+</code></pre>
+
+<p>Loading required libraries</p>
+
+<pre><code class="r">library(ggplot2)
+library(caret)
+library(randomForest)
+library(rpart)
+library(e1071)
+library(knitr)
+</code></pre>
+
+<p>Changing basic R options</p>
+
+<pre><code class="r">options(scipen=999)
+</code></pre>
+
+<p>Setting up input and data directory</p>
+
+<pre><code class="r">inputDir &lt;- &quot;../Pract_Mach_Learn&quot;
+dataDir &lt;- file.path(inputDir,&quot;data&quot;)
+</code></pre>
+
+<p>Downloading source files</p>
+
+<pre><code class="r">downloadFile(dataDir, &quot;training_set.csv&quot;, 
+             &quot;http://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv&quot;)
+
+downloadFile(dataDir, &quot;testing_set.csv&quot;, 
+             &quot;http://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv&quot;)
+</code></pre>
+
+<p>Reading in source files</p>
+
+<pre><code class="r">trainFile &lt;- file.path(dataDir, &quot;training_set.csv&quot;)
+testFile &lt;- file.path(dataDir, &quot;testing_set.csv&quot;)
+
+data.train &lt;- read.csv(trainFile, header = TRUE, sep = &quot;,&quot;, na.strings = getNaStrings(), stringsAsFactors = FALSE)
+data.test &lt;- read.csv(testFile, header = TRUE, sep = &quot;,&quot;, na.strings = getNaStrings(), stringsAsFactors = FALSE)
+</code></pre>
+
+<p>Setting seed for reproducibility</p>
+
+<pre><code class="r">set.seed(230215)
+</code></pre>
+
+<h3>2. Preprocessing the data</h3>
+
+<p>A quick look into the data revealed, that even though missing values have been detected and replaced with &ldquo;NA&rdquo;, there are several columns consisting only of missing values. Thus, before being able to build an adequate prediction model, we have to preprocess the data. First, we removed variables with low variance values. Second, we checked for possible duplicate entries and removed the first 6 columns, since timestamp related data as well as ID columns are not helpful for our analysis. Third, we removed entire missing value columns from the data frame. </p>
+
+<pre><code class="r">data.train.nearzero &lt;- nearZeroVar(data.train, saveMetrics = TRUE)
+data.train &lt;- data.train[, !data.train.nearzero$nzv]
+data.train &lt;- data.train[!duplicated(data.train), -c(1:6)]
+data.train &lt;- data.train[, colSums(is.na(data.train)) == 0]
+</code></pre>
+
+<p>We repeated these steps for the testing set and also removed the &ldquo;problem_id&rdquo; column:</p>
+
+<pre><code class="r">data.test.nearzero &lt;- nearZeroVar(data.test, saveMetrics = TRUE)
+data.test &lt;- data.test[, !data.test.nearzero$nzv]
+data.test &lt;- data.test[!duplicated(data.test), -c(1:6)]
+data.test &lt;- data.test[, colSums(is.na(data.test)) == 0]
+data.test &lt;- data.test[, !(names(data.test) %in% c(&quot;problem_id&quot;))]
+</code></pre>
+
+<p>Then, we conducted a correlation analysis in order to find variables with a correlation greater or equal to 0.9.</p>
+
+<pre><code class="r">corr.train &lt;- cor(na.omit(data.train[sapply(data.train, is.numeric)]))
+corr.remove &lt;- findCorrelation(corr.train, cutoff = .90, verbose = FALSE)
+
+data.train &lt;- data.train[, -corr.remove]
+data.test &lt;- data.test[, colnames(data.test) %in% colnames(data.train)]
+</code></pre>
+
+<p>After the preprocessing steps, the training and testing data set are ready for the analysis. We have reduced both data sets to 46 and 45 variables (the testing set does not have a &ldquo;classe&rdquo; column).</p>
+
+<h3>Finding the adequate prediction model</h3>
+
+<p>There is a wide range of methods to predict the classe variables. Since we would like to solve a classification problem, we have decided to compare the accuracy of random forest, recursive partitioning, naive bayes and suport vector machines. All these approaches provide a good tradeoff between complexity and performance. The chosen prediction method will then be executed for the classification of our outcome variable from the testing set.</p>
+
+<p>Hence, we start our comparison with cross validation and split our training set into a training and testing subset with a ratio of 80/20.</p>
+
+<pre><code class="r">split &lt;- createDataPartition(y=data.train$classe, p=0.8, list=FALSE) 
+data.train.train &lt;- data.train[split, ] 
+data.train.test &lt;- data.train[-split, ]
+</code></pre>
+
+<p>As we can see, the distribution of the training subset class variable is nearly the same as in the training set</p>
+
+<pre><code class="r">qplot(classe, data=data.train.train, geom=&quot;histogram&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-13"/> </p>
+
+<pre><code class="r">qplot(classe, data=data.train, geom=&quot;histogram&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-13"/> </p>
+
+<p>Random forest prediction model</p>
+
+<pre><code class="r">md_rf &lt;- randomForest(as.factor(classe) ~ ., data=data.train.train, method=&quot;class&quot;)
+pred_rf &lt;- predict(md_rf, data.train.test, type = &quot;class&quot;)
+con_rf &lt;- confusionMatrix(pred_rf, data.train.test$classe)
+con_rf
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1116    0    0    0    0
+##          B    0  759    3    0    0
+##          C    0    0  681    5    1
+##          D    0    0    0  638    3
+##          E    0    0    0    0  717
+## 
+## Overall Statistics
+##                                                
+##                Accuracy : 0.9969               
+##                  95% CI : (0.9947, 0.9984)     
+##     No Information Rate : 0.2845               
+##     P-Value [Acc &gt; NIR] : &lt; 0.00000000000000022
+##                                                
+##                   Kappa : 0.9961               
+##  Mcnemar&#39;s Test P-Value : NA                   
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            1.0000   1.0000   0.9956   0.9922   0.9945
+## Specificity            1.0000   0.9991   0.9981   0.9991   1.0000
+## Pos Pred Value         1.0000   0.9961   0.9913   0.9953   1.0000
+## Neg Pred Value         1.0000   1.0000   0.9991   0.9985   0.9988
+## Prevalence             0.2845   0.1935   0.1744   0.1639   0.1838
+## Detection Rate         0.2845   0.1935   0.1736   0.1626   0.1828
+## Detection Prevalence   0.2845   0.1942   0.1751   0.1634   0.1828
+## Balanced Accuracy      1.0000   0.9995   0.9969   0.9957   0.9972
+</code></pre>
+
+<p>Recursive Partitioning prediction model</p>
+
+<pre><code class="r">md_rp &lt;- rpart(as.factor(classe) ~ ., data=data.train.train, method=&quot;class&quot;)
+pred_rp &lt;- predict(md_rp, data.train.test, type = &quot;class&quot;)
+con_rp &lt;- confusionMatrix(pred_rp, data.train.test$classe)
+con_rp
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1017  160   18   26   95
+##          B    6  326   17   34    8
+##          C   52  139  590  101   74
+##          D   28   43   40  419   62
+##          E   13   91   19   63  482
+## 
+## Overall Statistics
+##                                                
+##                Accuracy : 0.7224               
+##                  95% CI : (0.7081, 0.7364)     
+##     No Information Rate : 0.2845               
+##     P-Value [Acc &gt; NIR] : &lt; 0.00000000000000022
+##                                                
+##                   Kappa : 0.6472               
+##  Mcnemar&#39;s Test P-Value : &lt; 0.00000000000000022
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.9113  0.42951   0.8626   0.6516   0.6685
+## Specificity            0.8935  0.97946   0.8870   0.9473   0.9419
+## Pos Pred Value         0.7728  0.83376   0.6172   0.7078   0.7216
+## Neg Pred Value         0.9620  0.87741   0.9683   0.9328   0.9266
+## Prevalence             0.2845  0.19347   0.1744   0.1639   0.1838
+## Detection Rate         0.2592  0.08310   0.1504   0.1068   0.1229
+## Detection Prevalence   0.3355  0.09967   0.2437   0.1509   0.1703
+## Balanced Accuracy      0.9024  0.70448   0.8748   0.7994   0.8052
+</code></pre>
+
+<p>Naive bayes prediction model</p>
+
+<pre><code class="r">md_nb &lt;- naiveBayes(as.factor(classe) ~ ., data=data.train.train)
+pred_nb &lt;- predict(md_nb, data.train.test, type = &quot;class&quot;)
+con_nb &lt;- confusionMatrix(pred_nb, data.train.test$classe)
+con_nb
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   A   B   C   D   E
+##          A 501  62  29   5  18
+##          B 114 423  78  38 122
+##          C 324 146 463 199  86
+##          D 132  72  54 316 108
+##          E  45  56  60  85 387
+## 
+## Overall Statistics
+##                                                
+##                Accuracy : 0.5328               
+##                  95% CI : (0.517, 0.5485)      
+##     No Information Rate : 0.2845               
+##     P-Value [Acc &gt; NIR] : &lt; 0.00000000000000022
+##                                                
+##                   Kappa : 0.4195               
+##  Mcnemar&#39;s Test P-Value : &lt; 0.00000000000000022
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.4489   0.5573   0.6769  0.49145  0.53675
+## Specificity            0.9594   0.8887   0.7669  0.88841  0.92317
+## Pos Pred Value         0.8146   0.5458   0.3801  0.46334  0.61137
+## Neg Pred Value         0.8141   0.8933   0.9183  0.89911  0.89848
+## Prevalence             0.2845   0.1935   0.1744  0.16391  0.18379
+## Detection Rate         0.1277   0.1078   0.1180  0.08055  0.09865
+## Detection Prevalence   0.1568   0.1976   0.3105  0.17385  0.16136
+## Balanced Accuracy      0.7042   0.7230   0.7219  0.68993  0.72996
+</code></pre>
+
+<p>Support vector machine prediction model</p>
+
+<pre><code class="r">md_sv &lt;- svm(as.factor(classe) ~ ., data=data.train.train, gamma = 0.1)
+pred_sv &lt;- predict(md_sv, data.train.test, type = &quot;class&quot;)
+con_sv &lt;- confusionMatrix(pred_sv, data.train.test$classe)
+con_sv
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1114   11    0    0    0
+##          B    2  742    9    0    0
+##          C    0    5  671   38    1
+##          D    0    0    3  603    4
+##          E    0    1    1    2  716
+## 
+## Overall Statistics
+##                                                
+##                Accuracy : 0.9804               
+##                  95% CI : (0.9755, 0.9845)     
+##     No Information Rate : 0.2845               
+##     P-Value [Acc &gt; NIR] : &lt; 0.00000000000000022
+##                                                
+##                   Kappa : 0.9752               
+##  Mcnemar&#39;s Test P-Value : NA                   
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            0.9982   0.9776   0.9810   0.9378   0.9931
+## Specificity            0.9961   0.9965   0.9864   0.9979   0.9988
+## Pos Pred Value         0.9902   0.9854   0.9385   0.9885   0.9944
+## Neg Pred Value         0.9993   0.9946   0.9959   0.9879   0.9984
+## Prevalence             0.2845   0.1935   0.1744   0.1639   0.1838
+## Detection Rate         0.2840   0.1891   0.1710   0.1537   0.1825
+## Detection Prevalence   0.2868   0.1919   0.1823   0.1555   0.1835
+## Balanced Accuracy      0.9971   0.9871   0.9837   0.9678   0.9959
+</code></pre>
+
+<p>In order to summarize the relevant information, we consolidated the prediction_results</p>
+
+<pre><code class="r">pred_results &lt;- data.frame(random_forest=pred_rf,
+                           recursive_partitioning=pred_rp,
+                           naive_bayes=pred_nb,
+                           support_vector_machine=pred_sv                           
+                           )
+
+acc_results &lt;- data.frame(model=c(&quot;random_forest&quot;, &quot;recursive_partitioning&quot;, &quot;naive_bayes&quot;, &quot;support_vector_machines&quot;),
+                          accuracy=c(con_rf$overall[1], con_rp$overall[1], con_nb$overall[1], con_sv$overall[1]))
+
+acc_results &lt;- acc_results[order(-acc_results$accuracy),]
+
+kable(acc_results)
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="left">model</th>
+<th align="right">accuracy</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">random_forest</td>
+<td align="right">0.9969411</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">support_vector_machines</td>
+<td align="right">0.9803722</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">recursive_partitioning</td>
+<td align="right">0.7224063</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">naive_bayes</td>
+<td align="right">0.5327555</td>
+</tr>
+</tbody></table>
+
+<p>The results suggest, that random forest as well as support vector machine prediction models provide the highest accuracy. Therefore, we used these two methods to predict the &ldquo;classe&rdquo; variable in the testing set.</p>
+
+<pre><code class="r">final_rf &lt;- predict(md_rf, data.test, type=&quot;class&quot;)
+final_sv &lt;- predict(md_sv, data.test, type=&quot;class&quot;)
+</code></pre>
+
+<p>When comparing the results, we see that there is only one difference in predicting the excercise classes for the subjects. However, since random forest has a slightly better accuracy, we decided to use these results for the final submission.</p>
+
+<pre><code class="r">final_results &lt;- data.frame(problem_id=c(1:20),
+                            random_forest=final_rf,
+                            support_vector_machine=final_sv,
+                            check=ifelse(final_rf == final_sv,TRUE,FALSE)
+                            )
+
+final_results
+</code></pre>
+
+<pre><code>##    problem_id random_forest support_vector_machine check
+## 1           1             B                      B  TRUE
+## 2           2             A                      A  TRUE
+## 3           3             B                      A FALSE
+## 4           4             A                      A  TRUE
+## 5           5             A                      A  TRUE
+## 6           6             E                      E  TRUE
+## 7           7             D                      D  TRUE
+## 8           8             B                      B  TRUE
+## 9           9             A                      A  TRUE
+## 10         10             A                      A  TRUE
+## 11         11             B                      B  TRUE
+## 12         12             C                      C  TRUE
+## 13         13             B                      B  TRUE
+## 14         14             A                      A  TRUE
+## 15         15             E                      E  TRUE
+## 16         16             E                      E  TRUE
+## 17         17             A                      A  TRUE
+## 18         18             B                      B  TRUE
+## 19         19             B                      B  TRUE
+## 20         20             B                      B  TRUE
+</code></pre>
+
+<p>With a custom <em>writeOutputfiles</em> function, we exported the results as .txt files for upload into the coursera portal. </p>
+
+<pre><code class="r">writeOutputfiles = function(x){
+    n = length(x)
+    for(i in 1:n){
+        filename = file.path(dataDir, paste0(&quot;case_&quot;,i,&quot;.txt&quot;))   
+        write.table(x[i],file=filename,quote=FALSE,row.names=FALSE,col.names=FALSE)
+    }
+}
+
+writeOutputfiles(final_results$random_forest)
+</code></pre>
+
+<p>Finally, we have to set back the originale locale</p>
+
+<pre><code class="r">session &lt;- sessInfo(clear=TRUE, loc=c(&quot;LC_TIME&quot;,origLocale), log=TRUE)
+</code></pre>
+
+<h3>References</h3>
+
+<p>Ugulino, W.; Cardador, D.; Vega, K.; Velloso, E.; Milidiu, R.; Fuks, H. <a href="http://groupware.les.inf.puc-rio.br/har#ixzz3SL0H9aaT">Wearable Computing: Accelerometers&#39; Data Classification of Body Postures and Movements.</a> Proceedings of 21st Brazilian Symposium on Artificial Intelligence. Advances in Artificial Intelligence - SBIA 2012. In: Lecture Notes in Computer Science. , pp. 52-61. Curitiba, PR: Springer Berlin / Heidelberg, 2012. ISBN 978-3-642-34458-9. DOI: 10.1007/978-3-642-34459-6_6.</p>
+
+</body>
+
+</html>
